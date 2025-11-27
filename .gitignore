@@ -47,3 +47,8 @@ next-env.d.ts
 *.njsproj
 *.sln
 *.sw?
+
+# Deployment guides (local only)
+DEPLOYMENT.md
+DEPLOYMENT_COOLIFY.md
+PR_DESCRIPTION.md
