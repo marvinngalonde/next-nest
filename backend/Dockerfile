@@ -6,7 +6,8 @@ FROM base AS deps
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm config set fetch-timeout 600000 && \
+RUN apk add --no-cache openssl libc6-compat && \
+    npm config set fetch-timeout 600000 && \
     npm config set fetch-retries 5 && \
     npm ci
 
@@ -27,6 +28,8 @@ FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
+
+RUN apk add --no-cache openssl libc6-compat
 
 COPY --from=builder /app/dist ./dist
 COPY --from=builder /app/node_modules ./node_modules
