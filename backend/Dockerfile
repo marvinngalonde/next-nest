@@ -22,7 +22,8 @@ COPY . .
 RUN npx prisma generate
 
 # Build the application
-RUN npm run build
+RUN npm run build || { echo "BUILD FAILED"; exit 1; }
+
 
 # Production image, copy all the files and run nest
 FROM base AS runner
@@ -39,4 +40,4 @@ COPY --from=builder /app/prisma ./prisma
 
 EXPOSE 3001
 
-CMD ["sh", "-c", "npx prisma migrate deploy && node dist/main"]
+CMD ["sh", "-c", "npx prisma migrate deploy && node dist/src/main.js"]
